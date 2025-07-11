@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Submit Your Request</title>
+    <link rel="stylesheet" href="submit request.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="navbar-title">Rajdhani College</div>
+            <ul class="navbar-menu">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Submit Request</a></li>
+                <li><a href="#">Track Request</a></li>
+                <li><a href="#">Question Papers</a></li>
+                <li><a href="#">Admin Login</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div class="form-container">
+            <h1>Submit Your Request</h1>
+            <form>
+                <section>
+                    <h2>Personal Information</h2>
+                    <div class="form-row">
+                        <input type="text" placeholder="Full Name *" required>
+                        <input type="text" placeholder="Contact Number *" required>
+                    </div>
+                    <div class="form-row">
+                        <input type="email" placeholder="Email">
+                    </div>
+                    <div class="form-row note">
+                        Optional - for receiving updates about your request
+                    </div>
+                </section>
+                <hr>
+                <section>
+                    <h2>Request Details</h2>
+                    <div class="form-row">
+                        <select required>
+                            <option value="">Request Type *</option>
+                            <option>Admin Related</option>
+                            <option>Academic </option>
+                            <option>Complains</option>
+                            <option>Suggestions</option>
+                            <option>Demands</option>
+                        </select>
+                        <select required>
+                            <option value="">Request Sub-Type *</option>
+                            <option>Sub-Type 1</option>
+                            <option>Sub-Type 2</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <textarea placeholder="Additional Details *" required></textarea>
+                    </div>
+                </section>
+                <div class="form-row center">
+                    <button type="submit">Submit Request <span>&#10148;</span></button>
+                </div>
+            </form>
+        </div>
+    </main>
+</body>
+</html>
