@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Submit Your Request</title>
+    <link rel="stylesheet" href="submit request.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="navbar-title">Rajdhani College</div>
+            <ul class="navbar-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="submit request.html">&#43; Submit Request</a></li>
+            <li><a href="whatsaap QR.html">&#128269; Question Papers</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div class="form-container">
+            <h1>Submit Your Request</h1>
+            <form action="submit request.php" method="POST">
+                <section>
+                    <h2>Personal Information</h2>
+                    <div class="form-row">
+                        <input type="text" name="name" placeholder="Full Name *" required>
+                        <input type="text" name="contact" placeholder="Contact Number *" required>
+                    </div>
+                    <div class="form-row">
+                        <input type="email" name="email" placeholder="Email">
+                    </div>
+                    <div class="form-row note">
+                        Optional - for receiving updates about your request
+                    </div>
+                </section>
+                <hr>
+                <section>
+                    <h2>Request Details</h2>
+                    <div class="form-row">
+                        <select name="request_type" id="request_type" required>
+                            <option value="">Request Type *</option>
+                            <option value="Academics">Academics</option>
+                            <option value="Admin Related">Admin Related</option>
+                            <option value="Complains">Complains</option>
+                            <option value="Suggestions">Suggestions</option>
+                            <option value="Demands">Demands</option>
+                        </select>
+                        <select name="request_subtype" id="request_subtype" required>
+                            <option value="">Request Sub-Type *</option>
+                        </select>
+                    </div>
+                </section>
+                <div id="additional-info-section" style="display:none;">
+                    <section>
+                        <h2>Additional Information (DO NOT FILL IF YOU ARE SELECTING SUBJECT SELECTION/CHANGE REQUEST)</h2>
+                        <div class="form-row">
+                            <input type="text" name="course_name" placeholder="Course Name">
+                            <input type="text" name="semester" placeholder="Semester">
+                        </div>
+                        <div class="form-row">
+                            <select name="paper_type">
+                                <option value="">Paper Type</option>
+                                <option>Core</option>
+                                <option>GE</option>
+                                <option>SEC</option>
+                                <option>VAC</option>
+                                <option>EVS</option>
+                                <option>DSE</option>
+                            </select>
+                            <input type="text" name="paper_name" placeholder="Paper Name">
+                        </div>
+                    </section>
+                </div>
+                <div id="subject-selection-section" style="display:none;">
+                    <section>
+                        <h2>Additional Information</h2>
+                        <div class="form-row">
+                            <input type="text" name="roll_number" placeholder="Roll Number">
+                            <input type="text" name="contact_number" placeholder="Contact Number">
+                        </div>
+                        <div class="form-row">
+                            <input type="text" name="semester" placeholder="Semester">
+                            <input type="text" name="course" placeholder="Course">
+                        </div>
+                        <div class="form-row">
+                            <select name="subject_type">
+                                <option value="">Subject Type</option>
+                                <option>Core</option>
+                                <option>GE</option>
+                                <option>SEC</option>
+                                <option>VAC</option>
+                                <option>EVS</option>
+                                <option>DSE</option>
+                            </select>
+                            <input type="text" name="subject_name" placeholder="Subject Name">
+                        </div>
+                        <div class="form-row">
+                            <textarea name="reason" placeholder="Reason for Request"></textarea>
+                        </div>
+                    </section>
+                </div>
+                <section>
+                    <h2>Additional Information</h2>
+                    <div class="form-row">
+                        <textarea name="details" placeholder="Additional Details *" required></textarea>
+                    </div>
+                </section>
+                <div class="form-row center">
+                    <button type="submit">Submit Request <span>&#10148;</span></button>
+                </div>
+            </form>
+        </div>
+    </main>
+    
+    <script>
+window.onload = function() {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('msg') === 'success') {
+        alert('Thank you! Your request has been submitted.');
+        // Remove the msg parameter from the URL
+        params.delete('msg');
+        window.history.replaceState({}, document.title, window.location.pathname + (params.toString() ? '?' + params.toString() : ''));
+    } else if (params.get('msg') === 'error') {
+        alert('Sorry, there was a problem sending your request via email.');
+        // Remove the msg parameter from the URL
+        params.delete('msg');
+        window.history.replaceState({}, document.title, window.location.pathname + (params.toString() ? '?' + params.toString() : ''));
+    }
+};
+
+const subtypeOptions = {
+    "Academics": [
+        "Request PYQ PDF",
+        "Request Syllabus PDF",
+        "Time Table Queries",
+        "Other Requests"
+    ],
+    "Admin Related": [
+        "Subject Selection/Change Request",
+        "Query related to Admin Work",
+        "Other Admin Works"
+    ],
+    "Complains": [
+        "General Complaint"
+    ],
+    "Suggestions": [
+        "General Suggestion"
+    ],
+    "Demands": [
+        "General Demand"
+    ]
+};
+
+document.getElementById('request_type').addEventListener('change', function() {
+    const type = this.value;
+    const subtypeSelect = document.getElementById('request_subtype');
+    subtypeSelect.innerHTML = '<option value="">Request Sub-Type *</option>';
+    if (subtypeOptions[type]) {
+        subtypeOptions[type].forEach(function(subtype) {
+            const opt = document.createElement('option');
+            opt.value = subtype;
+            opt.textContent = subtype;
+            subtypeSelect.appendChild(opt);
+        });
+    }
+});
+
+const requestTypeSelect = document.getElementById('request_type');
+const subtypeSelect = document.getElementById('request_subtype');
+const additionalInfoSection = document.getElementById('additional-info-section');
+const subjectSelectionSection = document.getElementById('subject-selection-section');
+
+requestTypeSelect.addEventListener('change', function() {
+    const type = this.value;
+    // Update subtypes
+    subtypeSelect.innerHTML = '<option value="">Request Sub-Type *</option>';
+    if (subtypeOptions[type]) {
+        subtypeOptions[type].forEach(function(subtype) {
+            const opt = document.createElement('option');
+            opt.value = subtype;
+            opt.textContent = subtype;
+            subtypeSelect.appendChild(opt);
+        });
+    }
+    // Show/hide additional info
+    if (type === "Academics" || type === "Admin Related") {
+        additionalInfoSection.style.display = "block";
+        subjectSelectionSection.style.display = "none"; // Hide subject selection section
+    } else {
+        additionalInfoSection.style.display = "none";
+        subjectSelectionSection.style.display = "none"; // Hide subject selection section
+    }
+});
+
+function toggleSubjectSelectionSection() {
+    if (subtypeSelect.value === "Subject Selection/Change Request") {
+        subjectSelectionSection.style.display = "block";
+    } else {
+        subjectSelectionSection.style.display = "none";
+    }
+}
+
+subtypeSelect.addEventListener('change', toggleSubjectSelectionSection);
+
+// On page load, ensure correct visibility if form is pre-filled
+window.addEventListener('DOMContentLoaded', function() {
+    const type = requestTypeSelect.value;
+    if (type === "Academics" || type === "Admin Related") {
+        additionalInfoSection.style.display = "block";
+        subjectSelectionSection.style.display = "none"; // Hide subject selection section
+    } else {
+        additionalInfoSection.style.display = "none";
+        subjectSelectionSection.style.display = "none"; // Hide subject selection section
+    }
+    toggleSubjectSelectionSection(); // Ensure correct visibility on page load
+});
+</script>
+</body>
+</html>
